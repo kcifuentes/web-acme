@@ -1,0 +1,69 @@
+@import "~@angular/material/_theming";
+
+:root {
+  --color-primary: 92, 119, 255;
+  --color-primary-contrast: 255, 255, 255;
+
+  --color-accent: 255, 64, 129;
+  --color-accent-contrast: 255, 255, 255;
+
+  --color-warn: 244, 67, 54;
+  --color-warn-contrast: 255, 255, 255;
+
+  $acme-primary: mat-palette((
+    100: rgba(var(--color-primary), 0.1),
+    500: rgba(var(--color-primary), 1),
+    700: rgba(var(--color-primary), 1),
+    contrast: (
+      100: rgba(var(--color-primary-contrast), 1),
+      500: rgba(var(--color-primary-contrast), 1),
+      700: rgba(var(--color-primary-contrast), 1),
+    )
+  )) !default;
+
+  $acme-accent: mat-palette((
+    100: rgba(var(--color-accent), 0.1),
+    500: rgba(var(--color-accent), 1),
+    700: rgba(var(--color-accent), 1),
+    contrast: (
+      100: rgba(var(--color-accent-contrast), 1),
+      500: rgba(var(--color-accent-contrast), 1),
+      700: rgba(var(--color-accent-contrast), 1),
+    )
+  )) !default;
+
+  $acme-warn: mat-palette((
+    100: rgba(var(--color-warn), 0.1),
+    500: rgba(var(--color-warn), 1),
+    700: rgba(var(--color-warn), 1),
+    contrast: (
+      100: rgba(var(--color-warn-contrast), 1),
+      500: rgba(var(--color-warn-contrast), 1),
+      700: rgba(var(--color-warn-contrast), 1),
+    )
+  )) !default;
+
+  $acme-theme-foreground: (
+    text: black,
+    elevation: $mat-elevation-color,
+    divider: rgba(82, 63, 105, 0.06)
+  ) !default;
+
+  $acme-theme-background: (
+    app-bar: #ebebee
+  ) !default;
+
+  $acme-theme: (
+    primary: $acme-primary,
+    accent: $acme-accent,
+    warn: $acme-warn,
+    is-dark: false,
+    foreground: map_merge($mat-light-theme-foreground, $acme-theme-foreground),
+    background: map_merge($mat-light-theme-background, $acme-theme-background),
+  ) !default;
+
+
+  --background-base: rgb(245, 245, 248);
+  --background-hover: #{map-get(map-get($acme-theme, background), hover)};
+
+}

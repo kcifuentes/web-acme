@@ -1,0 +1,14 @@
+.bg-pattern {
+  background: var(--background-base) linear-gradient(
+      135deg, var(--background-base) 22px, var(--background-hover) 22px,
+      var(--background-hover) 24px, transparent 24px, transparent 67px,
+      var(--background-hover) 67px,
+      var(--background-hover) 69px, transparent 69px
+  ) linear-gradient(
+      225deg, var(--background-base) 22px,
+      var(--background-hover) 22px,
+      var(--background-hover) 24px, transparent 24px, transparent 67px,
+      var(--background-hover) 67px, var(--background-hover) 69px, transparent 69px
+  ) 0 64px;
+  background-size: 64px 128px;
+}
