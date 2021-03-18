@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://api.acme.innovarting.com',
+  apiUrl: 'https://2d1a805ecea9.ngrok.io',
 };
