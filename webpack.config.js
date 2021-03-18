@@ -9,6 +9,7 @@ try {
 }
 
 module.exports = {
+  // Fix for: https://github.com/recharts/recharts/issues/1463
   node: {
     fs: 'empty'
   },
@@ -29,7 +30,7 @@ module.exports = {
             }
           }
         ]
-      },
-    ],
-  },
+      }
+    ]
+  }
 };

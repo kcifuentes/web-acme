@@ -2,8 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import icLayers from '@iconify/icons-ic/twotone-layers';
 import {NavigationItem} from '@share/interfaces/navigation-item.interface';
 import {LayoutService} from '@share/services/layout.service';
-import {trackByRoute} from "@share/utils/track-by";
-import icContacts from '@iconify/icons-ic/twotone-contacts';
+import {trackByRoute} from '@share/utils/track-by';
 
 @Component({
   selector: 'acme-sidenav',
@@ -19,6 +18,12 @@ export class SidenavComponent implements OnInit {
       type: 'link',
       label: 'Propietarios',
       route: '/owners',
+      icon: icLayers,
+      routerLinkActiveOptions: {exact: true}
+    }, {
+      type: 'link',
+      label: 'Conductores',
+      route: '/drivers',
       icon: icLayers,
       routerLinkActiveOptions: {exact: true}
     },

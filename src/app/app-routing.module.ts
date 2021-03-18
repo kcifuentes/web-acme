@@ -8,12 +8,23 @@ const routes: Routes = [
     component: HomeComponent,
     children: [
       {
-        path: 'owners',
-        redirectTo: '/'
+        path: '',
+        redirectTo: 'owners',
+        pathMatch: 'full'
       },
       {
-        path: '',
-        loadChildren: () => import('./pages/owner/owner.module').then(m => m.OwnerModule)
+        path: 'owners',
+        data: {
+          profileType: 'owner'
+        },
+        loadChildren: () => import('./pages/profile/profile.module').then(m => m.ProfileModule)
+      },
+      {
+        path: 'drivers',
+        data: {
+          profileType: 'driver'
+        },
+        loadChildren: () => import('./pages/profile/profile.module').then(m => m.ProfileModule)
       }
     ]
   },

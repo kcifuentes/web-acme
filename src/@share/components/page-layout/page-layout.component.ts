@@ -1,4 +1,4 @@
-import { Component, HostBinding, Input, ViewEncapsulation } from '@angular/core';
+import {Component, HostBinding, Input, ViewEncapsulation} from '@angular/core';
 
 @Component({
   selector: 'acme-page-layout',
@@ -13,7 +13,8 @@ export class PageLayoutComponent {
 
   @Input() mode: 'card' | 'simple' = 'simple';
 
-  constructor() { }
+  constructor() {
+  }
 
   @HostBinding('class.acme-page-layout-card')
   get isCard() {
