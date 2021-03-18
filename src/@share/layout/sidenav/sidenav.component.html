@@ -1,0 +1,16 @@
+<div [class.collapsed]="collapsed"
+     [class.open]="collapsed && collapsedOpen$ | async"
+     class="sidenav flex flex-col">
+  <div class="sidenav-toolbar flex-none flex items-center">
+    <h2 class="title ltr:pl-4 rtl:pr-4 select-none flex-auto">ACME</h2>
+  </div>
+
+  <acme-scrollbar class="flex-auto">
+    <div class="sidenav-items">
+      <acme-sidenav-item *ngFor="let item of items; trackBy: trackByRoute"
+                        [item]="item"
+                        [level]="0">
+      </acme-sidenav-item>
+    </div>
+  </acme-scrollbar>
+</div>

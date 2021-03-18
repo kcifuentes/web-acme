@@ -1,3 +1,19 @@
+.container {
+  padding-left: var(--padding-gutter);
+  padding-right: var(--padding-gutter);
+
+  @screen lg {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: theme('screens.lg');
+    width: 100%;
+  }
+}
+
+.card {
+  @apply rounded shadow-8 bg-card;
+}
+
 .bg-pattern {
   background: var(--background-base) linear-gradient(
       135deg, var(--background-base) 22px, var(--background-hover) 22px,
