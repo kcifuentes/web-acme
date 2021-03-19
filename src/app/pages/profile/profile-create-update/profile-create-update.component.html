@@ -99,7 +99,9 @@
   </mat-dialog-content>
 
   <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close type="button">CANCEL</button>
+    <button mat-button mat-dialog-close type="button">
+      CANCELAR
+    </button>
     <button *ngIf="isCreateMode()" color="primary" mat-button type="submit">
       CREAR {{ getProfileTypeName(data.profileType) | uppercase }}
     </button>
@@ -108,20 +110,3 @@
     </button>
   </mat-dialog-actions>
 </form>
-
-<mat-menu #settingsMenu="matMenu" xPosition="before" yPosition="below">
-  <button mat-menu-item>
-    <mat-icon [icIcon]="icPrint"></mat-icon>
-    <span>Print</span>
-  </button>
-
-  <button mat-menu-item>
-    <mat-icon [icIcon]="icDownload"></mat-icon>
-    <span>Export</span>
-  </button>
-
-  <button mat-menu-item>
-    <mat-icon [icIcon]="icDelete"></mat-icon>
-    <span>Delete</span>
-  </button>
-</mat-menu>

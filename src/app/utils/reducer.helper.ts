@@ -7,7 +7,7 @@ import {clearState, reducers, State} from '@app/store/reducer';
 import {storageSync} from '@larscom/ngrx-store-storagesync';
 import {EffectsModule} from '@ngrx/effects';
 import {ActionReducer, MetaReducer, StoreModule} from '@ngrx/store';
-import {environment, extModules} from '../../environments/environment';
+import {environment} from '../../environments/environment';
 import {DocumentTypeEffect} from "@app/store/document-type";
 import {ProfileEffect} from "@app/store/profile/profile.effect";
 
@@ -65,5 +65,5 @@ export const STORE_IMPORTS = [
     DocumentTypeEffect,
     ProfileEffect
   ]),
-  extModules
+  environment.extModules
 ];

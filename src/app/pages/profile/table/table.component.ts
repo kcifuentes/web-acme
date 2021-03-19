@@ -80,7 +80,6 @@ export class TableComponent implements OnInit {
     this.profiles$.subscribe((profiles: ProfileInterface[]) => {
       if (isNotNullOrUndefined(profiles) && profiles.length > 0) {
         this.getProfilesData(profiles).subscribe(customers => {
-          console.log(customers);
           this.subject$.next(customers);
         });
       }
@@ -126,7 +125,6 @@ export class TableComponent implements OnInit {
     }
     value = value.trim();
     value = value.toLowerCase();
-    console.log(value);
     this.dataSource.filter = value;
   }
 

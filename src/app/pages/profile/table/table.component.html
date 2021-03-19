@@ -116,11 +116,11 @@
   <ng-template let-profile="profile" matMenuContent>
     <button (click)="updateProfile(profile)" mat-menu-item>
       <mat-icon [icIcon]="icEdit"></mat-icon>
-      <span>Modify</span>
+      <span>Modificar</span>
     </button>
-    <button (click)="deleteProfile(profile)" mat-menu-item>
-      <mat-icon [icIcon]="icDelete"></mat-icon>
-      <span>Delete</span>
+    <button (click)="deleteProfile(profile)" mat-menu-item class="text-red">
+      <mat-icon [icIcon]="icDelete" color="warn"></mat-icon>
+      <span>Eliminar</span>
     </button>
   </ng-template>
 </mat-menu>

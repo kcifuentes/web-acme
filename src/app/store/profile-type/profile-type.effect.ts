@@ -16,7 +16,6 @@ export class ProfileTypeEffect {
     mergeMap(() => {
       return this.profileTypeService.getAllProfileTypes().pipe(
         mergeMap((response: any) => {
-          console.log(response);
           return [
             new GetAllProfileTypesSuccess(response)
           ];

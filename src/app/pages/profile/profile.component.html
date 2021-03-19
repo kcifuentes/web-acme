@@ -5,11 +5,8 @@
          class="w-full flex flex-col sm:flex-row justify-between">
       <div>
         <h1 class="title mt-0 mb-1">
-          Listado de {{ getProfileTypeName(profileType) }}
+          Listado de {{ getProfileTypeName(profileType, true) }}
         </h1>
-        <acme-breadcrumbs
-          [crumbs]="['Inicio', 'Listado de' + getProfileTypeName(profileType)]">
-        </acme-breadcrumbs>
       </div>
     </div>
   </acme-page-layout-header>
