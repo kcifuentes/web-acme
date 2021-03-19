@@ -1,31 +1,44 @@
+import {ProfileInterface} from '@app/store/profile/interfaces/profile.interface';
+
 export enum ProfileActionTypes {
-  GET_ALL_PROFILES_ATTEMPT = '[Profile] Attempt to get list Profiles from API',
+  SAVE_PROFILE = '[Profile] Attempt to save profile information in the API',
+  SAVE_PROFILE_SUCCESS = '[Profile] Save profile information successfully',
+
+  GET_ALL_PROFILES = '[Profile] Attempt to get list Profiles from API',
   GET_ALL_PROFILES_SUCCESS = '[Profile] Get list of Profiles from API',
-  CREATE_NEW_PROFILE_ATTEMPT = '[Profile] Attempt to create a new Profile in the API'
 }
 
-export class GetAllProfilesAttempt {
-  readonly type = ProfileActionTypes.GET_ALL_PROFILES_ATTEMPT;
+export class SaveProfile {
+  readonly type = ProfileActionTypes.SAVE_PROFILE;
 
-  constructor(payload: { profileTypeId: number }) {
+  constructor(public payload: ProfileInterface) {
+  }
+}
+
+export class SaveProfileSuccess {
+  readonly type = ProfileActionTypes.SAVE_PROFILE_SUCCESS;
+
+  constructor(public response: ProfileInterface) {
+  }
+}
+
+export class GetAllProfiles {
+  readonly type = ProfileActionTypes.GET_ALL_PROFILES;
+
+  constructor(public payload: { profileTypeId: number }) {
   }
 }
 
 export class GetAllProfilesSuccess {
   readonly type = ProfileActionTypes.GET_ALL_PROFILES_SUCCESS;
 
-  constructor(payload: { profileType: number }) {
-  }
-}
-
-export class CreateNewProfileAttempt {
-  readonly type = ProfileActionTypes.CREATE_NEW_PROFILE_ATTEMPT;
-
-  constructor(payload: {}) {
+  constructor(public response: ProfileInterface[]) {
   }
 }
 
 
 export type ProfileAction =
-  GetAllProfilesAttempt |
+  SaveProfile |
+  SaveProfileSuccess |
+  GetAllProfiles |
   GetAllProfilesSuccess;

@@ -1,9 +1,9 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {CityInterface, GetAllCities, getCities} from '@app/store/city';
 import {DocumentTypeInterface, GetAllDocumentTypes} from '@app/store/document-type';
-import {ProfileModel} from '@app/store/profile';
+import {ProfileInterface, ProfileModel, SaveProfile} from '@app/store/profile';
 import {ProfileTypeInterface} from '@app/store/profile-type';
 import {State} from '@app/store/reducer';
 import {getProfileTypeName, isNullOrUndefined} from '@app/utils';
@@ -21,6 +21,7 @@ import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs';
 import {delay} from 'rxjs/operators';
 import {getDocumentTypes} from "@app/store/document-type/document-type.selectors";
+import {ToastrService} from "ngx-toastr";
 
 export interface DialogData {
   mode: 'create' | 'update';
@@ -61,6 +62,7 @@ export class ProfileCreateUpdateComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private store: Store<State>,
+    private toastr: ToastrService,
     private dialogRef: MatDialogRef<ProfileCreateUpdateComponent>,
     private fb: FormBuilder) {
   }
@@ -85,22 +87,53 @@ export class ProfileCreateUpdateComponent implements OnInit {
     });
 
     this.form = this.fb.group({
-      id: [this.data.profile?.id || ''],
-      firstName: [this.data.profile?.firstName || ''],
-      middleName: this.data.profile?.middleName || '',
-      lastNames: [this.data.profile?.lastNames || ''],
-      documentType: this.data.profile?.documentType || '',
-      documentNumber: this.data.profile?.documentNumber || '',
-      address: this.data.profile?.address || '',
-      city: this.data.profile?.city || '',
-      phone: this.data.profile?.phone || '',
+      firstName: [
+        this.data.profile?.firstName || '', [Validators.required]
+      ],
+      middleName: [
+        this.data.profile?.middleName || '', [Validators.required]
+      ],
+      lastNames: [
+        this.data.profile?.lastNames || '', [Validators.required]
+      ],
+      documentType: [
+        this.data.profile?.documentType || '', [Validators.required]
+      ],
+      documentNumber: [
+        this.data.profile?.documentNumber || '', [Validators.required]
+      ],
+      address: [
+        this.data.profile?.address || '', [Validators.required]
+      ],
+      city: [
+        this.data.profile?.city || '', [Validators.required]
+      ],
+      phone: [
+        this.data.profile?.phone || '', [Validators.required]
+      ],
     });
   }
 
   save() {
     if (this.form.invalid) {
-
+      this.toastr.error('Debe diligenciar todos los campos marcados con el asterisco (*).', 'Error');
+      return;
     }
+
+    const dataRequest: ProfileInterface = {
+      first_name: this.form.get('firstName').value,
+      middle_name: this.form.get('middleName').value,
+      last_names: this.form.get('lastNames').value,
+      document_type: this.form.get('documentType').value,
+      document_number: this.form.get('documentNumber').value,
+      address: this.form.get('address').value,
+      city: this.form.get('city').value,
+      profile_type: this.data.profileType,
+      phone: this.form.get('phone').value
+    };
+
+    this.store.dispatch(new SaveProfile(dataRequest));
+    this.dialogRef.close();
   }
 
   isCreateMode() {

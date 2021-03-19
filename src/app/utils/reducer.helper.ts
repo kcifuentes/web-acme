@@ -7,9 +7,9 @@ import {clearState, reducers, State} from '@app/store/reducer';
 import {storageSync} from '@larscom/ngrx-store-storagesync';
 import {EffectsModule} from '@ngrx/effects';
 import {ActionReducer, MetaReducer, StoreModule} from '@ngrx/store';
-import {StoreDevtoolsModule} from '@ngrx/store-devtools';
-import {environment} from '../../environments/environment';
+import {environment, extModules} from '../../environments/environment';
 import {DocumentTypeEffect} from "@app/store/document-type";
+import {ProfileEffect} from "@app/store/profile/profile.effect";
 
 export function encrypt(bCrypt: BCryptServiceService, data: string) {
   return bCrypt.encode(data);
@@ -62,10 +62,8 @@ export const STORE_IMPORTS = [
     AuthEffect,
     CityEffect,
     ProfileTypeEffect,
-    DocumentTypeEffect
+    DocumentTypeEffect,
+    ProfileEffect
   ]),
-  StoreDevtoolsModule.instrument({
-    maxAge: 25,
-    logOnly: environment.production,
-  })
+  extModules
 ];

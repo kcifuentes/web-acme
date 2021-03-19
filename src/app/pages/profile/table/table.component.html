@@ -9,7 +9,7 @@
       <ic-icon [icIcon]="icSearch" size="20px"></ic-icon>
       <input [formControl]="searchCtrl"
              class="px-4 py-3 border-0 outline-none w-full bg-transparent"
-             placeholder="Search..."
+             placeholder="Buscar..."
              type="search">
     </div>
 
@@ -33,7 +33,7 @@
             color="primary"
             fxFlex="none"
             mat-mini-fab
-            matTooltip="Nuevo {{ profileType?.name == 'owner' ? 'Propietario' : 'Conductor'}}"
+            matTooltip="Nuevo {{ _profileType?.name == 'owner' ? 'Propietario' : 'Conductor'}}"
             type="button">
       <mat-icon [icIcon]="icAdd"></mat-icon>
     </button>

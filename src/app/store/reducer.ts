@@ -2,6 +2,7 @@ import {cityReducer, CityState} from '@app/store/city';
 import {documentTypeReducer, DocumentTypeState} from '@app/store/document-type/document-type.reducer';
 import {routeReducer, RouteState} from '@app/store/initialData/routes.reducer';
 import {initialState, profileTypeReducer, ProfileTypeState} from '@app/store/profile-type';
+import {profileReducer, ProfileState} from '@app/store/profile/profile.reducer';
 import {LoadingState} from '@app/utils/LoadingState';
 import {ActionReducerMap} from '@ngrx/store';
 import {AuthActionTypes, authReducer, AuthState} from './auth';
@@ -12,6 +13,7 @@ export interface State {
   cities: CityState;
   documentTypes: DocumentTypeState;
   profileTypes: ProfileTypeState;
+  profiles: ProfileState;
 }
 
 export const reducers: ActionReducerMap<State> = {
@@ -20,6 +22,7 @@ export const reducers: ActionReducerMap<State> = {
   cities: cityReducer,
   documentTypes: documentTypeReducer,
   profileTypes: profileTypeReducer,
+  profiles: profileReducer
 };
 
 export function clearState(reducer) {

@@ -3,11 +3,13 @@ import {FormControl} from '@angular/forms';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
-import {ProfileModel} from '@app/store/profile';
+import {GetAllProfiles, ProfileInterface, ProfileModel} from '@app/store/profile';
 
 import {MatDialog} from '@angular/material/dialog';
 import {ProfileCreateUpdateComponent} from '@app/pages/profile/profile-create-update/profile-create-update.component';
 import {ProfileTypeInterface} from '@app/store/profile-type';
+import {profilesData} from '@app/store/profile/profile.selectors';
+import {State} from '@app/store/reducer';
 import icAdd from '@iconify/icons-ic/twotone-add';
 import icDelete from '@iconify/icons-ic/twotone-delete';
 import icEdit from '@iconify/icons-ic/twotone-edit';
@@ -18,10 +20,16 @@ import icMap from '@iconify/icons-ic/twotone-map';
 import icMoreHoriz from '@iconify/icons-ic/twotone-more-horiz';
 import icPhone from '@iconify/icons-ic/twotone-phone';
 import icSearch from '@iconify/icons-ic/twotone-search';
+import {Store} from '@ngrx/store';
 import {fadeInUp400ms} from '@share/animations/fade-in-up.animation';
 import {stagger40ms} from '@share/animations/stagger.animation';
 import {TableColumn} from '@share/interfaces/table-column.interface';
+import {isNotNullOrUndefined} from 'codelyzer/util/isNotNullOrUndefined';
+import {Observable, of, ReplaySubject} from 'rxjs';
+import {delay, filter} from 'rxjs/operators';
+import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 
+@UntilDestroy()
 @Component({
   selector: 'acme-table',
   templateUrl: './table.component.html',
@@ -35,10 +43,13 @@ export class TableComponent implements OnInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  @Input() profileType: ProfileTypeInterface;
+  profiles$: Observable<ProfileInterface[]> = this.store.select(profilesData).pipe(delay(0));
+  subject$: ReplaySubject<ProfileModel[]> = new ReplaySubject<ProfileModel[]>(1);
+  data$: Observable<ProfileModel[]> = this.subject$.asObservable();
+
+  profiles: ProfileModel[];
 
   searchCtrl = new FormControl();
-
   icPhone = icPhone;
   icMail = icMail;
   icMap = icMap;
@@ -62,20 +73,65 @@ export class TableComponent implements OnInit {
     {label: 'Teléfono', property: 'phone', type: 'text', visible: true},
     {label: 'Actions', property: 'actions', type: 'button', visible: true}
   ];
-
   pageSize = 10;
   pageSizeOptions: number[] = [5, 10, 20, 50];
 
-  profiles: ProfileModel[];
+  constructor(private dialog: MatDialog, private store: Store<State>) {
+    this.profiles$.subscribe((profiles: ProfileInterface[]) => {
+      if (isNotNullOrUndefined(profiles) && profiles.length > 0) {
+        this.getProfilesData(profiles).subscribe(customers => {
+          console.log(customers);
+          this.subject$.next(customers);
+        });
+      }
+    });
+  }
 
-  constructor(private dialog: MatDialog) {
+  _profileType: ProfileTypeInterface;
+
+  @Input()
+  set profileType(val: ProfileTypeInterface) {
+    if (isNotNullOrUndefined(val)) {
+      this._profileType = val;
+      this.store.dispatch(
+        new GetAllProfiles({
+          profileTypeId: val.id
+        })
+      );
+    }
   }
 
   get visibleColumns() {
     return this.columns.filter(column => column.visible).map(column => column.property);
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.dataSource = new MatTableDataSource();
+
+    this.profiles$.pipe(
+      filter<ProfileInterface[]>(Boolean)
+    ).subscribe(profiles => {
+      this.profiles = profiles.map((item) => new ProfileModel(item));
+      this.dataSource.data = this.profiles;
+    });
+
+    this.searchCtrl.valueChanges.pipe(
+      untilDestroyed(this)
+    ).subscribe(value => this.onFilterChange(value));
+  }
+
+  onFilterChange(value: string) {
+    if (!this.dataSource) {
+      return;
+    }
+    value = value.trim();
+    value = value.toLowerCase();
+    console.log(value);
+    this.dataSource.filter = value;
+  }
+
+  getProfilesData(profiles: ProfileInterface[]) {
+    return of(profiles.map(profile => new ProfileModel(profile)));
   }
 
   createProfile() {
@@ -84,12 +140,9 @@ export class TableComponent implements OnInit {
       disableClose: true,
       data: {
         mode: 'create',
-        profileType: this.profileType
+        profileType: this._profileType
       }
     }).afterClosed().subscribe((profile: ProfileModel) => {
-      if (profile) {
-        // Todo Dispatch Save Profile Action
-      }
     });
   }
 

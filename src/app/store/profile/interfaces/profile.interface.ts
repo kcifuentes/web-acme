@@ -3,7 +3,7 @@ import {DocumentTypeInterface} from '@app/store/document-type';
 import {ProfileTypeInterface} from '@app/store/profile-type';
 
 export interface ProfileInterface {
-  id: string;
+  id?: string;
   first_name: string;
   middle_name: string;
   last_names: string;

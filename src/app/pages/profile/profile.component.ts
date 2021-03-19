@@ -28,9 +28,7 @@ export class ProfileComponent implements OnInit {
     this.route.data.subscribe((v: { profileType: string }) => {
       this.routeData = v.profileType;
     });
-  }
 
-  ngOnInit(): void {
     this.store.select(profileTypesSelector).pipe().subscribe((profileTypes: ProfileTypeInterface[]) => {
       if (isNullOrUndefined(profileTypes) || profileTypes.length <= 0) {
         this.store.dispatch(new GetAllProfileTypes());
@@ -38,5 +36,8 @@ export class ProfileComponent implements OnInit {
         this.profileType = profileTypes.filter((profileType: ProfileTypeInterface) => profileType.name === this.routeData)[0];
       }
     });
+  }
+
+  ngOnInit(): void {
   }
 }
