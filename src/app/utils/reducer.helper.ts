@@ -1,15 +1,15 @@
 import {BCryptServiceService} from '@app/services/bcrypt-service.service';
 import {AuthEffect} from '@app/store/auth';
 import {CityEffect} from '@app/store/city';
+import {DocumentTypeEffect} from '@app/store/document-type';
 import {RoutesEffect} from '@app/store/initialData';
 import {ProfileTypeEffect} from '@app/store/profile-type/profile-type.effect';
+import {ProfileEffect} from '@app/store/profile/profile.effect';
 import {clearState, reducers, State} from '@app/store/reducer';
 import {storageSync} from '@larscom/ngrx-store-storagesync';
 import {EffectsModule} from '@ngrx/effects';
 import {ActionReducer, MetaReducer, StoreModule} from '@ngrx/store';
 import {environment} from '../../environments/environment';
-import {DocumentTypeEffect} from "@app/store/document-type";
-import {ProfileEffect} from "@app/store/profile/profile.effect";
 
 export function encrypt(bCrypt: BCryptServiceService, data: string) {
   return bCrypt.encode(data);
