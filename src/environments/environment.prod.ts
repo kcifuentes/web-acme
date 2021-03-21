@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://ae678fc28411.ngrok.io',
+  apiUrl: 'https://2701f7d0a364.ngrok.io',
   extModules: []
 };
